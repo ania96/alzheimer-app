@@ -55,6 +55,12 @@ public class AddReminder extends AppCompatActivity implements View.OnClickListen
     public void showAlert() {
         String message = getIntent().getStringExtra(Alarm.REMINDER_TEXT);
         if (message != null) {
+
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            final Ringtone ringtone = RingtoneManager.getRingtone(AddReminder.this, notification);
+            // Uruchomienie powiadomienia dźwiękowego
+            ringtone.play();
+
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setMessage(message)
                     // Anulowanie przypomnienia - użytkownik potwierdził, że wziął lek
@@ -63,6 +69,8 @@ public class AddReminder extends AppCompatActivity implements View.OnClickListen
                         public void onClick(DialogInterface dialog, int which) {
                            // AlarmUtil.cancelAlarm(AddReminder.this, getIntent(), 0);
                             Toast.makeText(AddReminder.this, "Anulowano alarm", Toast.LENGTH_LONG).show();
+                            // Anulowanie alarmu dźwiękowego
+                            ringtone.stop();
                         }
                     })
                     // Gdy użytkownik kliknie 'Przypomnij później' - powtórz komunikat za 5 min
@@ -70,6 +78,8 @@ public class AddReminder extends AppCompatActivity implements View.OnClickListen
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             AlarmUtil.replayAlarmAfterMinutes(AddReminder.this, REPLAY_IN_MINUTES, message);
+                            // Anulowanie alarmu dźwiękowego
+                            ringtone.stop();
                         }
                     })
                     // Gdy użytkownik anuluje komunikat - powtórz komunikat za 5 min
@@ -77,6 +87,8 @@ public class AddReminder extends AppCompatActivity implements View.OnClickListen
                         @Override
                         public void onCancel(DialogInterface dialog) {
                             AlarmUtil.replayAlarmAfterMinutes(AddReminder.this, REPLAY_IN_MINUTES, message);
+                            // Anulowanie alarmu dźwiękowego
+                            ringtone.stop();
                         }
                     })
 
