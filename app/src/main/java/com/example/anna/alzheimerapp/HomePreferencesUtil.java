@@ -7,18 +7,16 @@ import android.content.SharedPreferences;
 public class HomePreferencesUtil {
 
     public static final String HOME_PREFS = "HOME_PREFS";
-    public static final String HOME_LAT = "HOME_LAT";
-    public static final String HOME_LNG = "HOME_LNG";
+    public static final String HOME = "HOME";
 
-    public static final void putFloat(Activity activity, String key, float value) {
+    public static final void putString(Activity activity, String key, String value) {
         SharedPreferences.Editor edit = activity.getSharedPreferences(HOME_PREFS, Context.MODE_PRIVATE).edit();
-        edit.putFloat(key, value);
-        // zapisuje w danych aplikacji
+        edit.putString(key, value);
         edit.apply();
     }
 
-    public static final float getFloat(Activity activity, String key, float defaultValue) {
-        return activity.getSharedPreferences(HOME_PREFS, Context.MODE_PRIVATE).getFloat(key, defaultValue);
+    public static final String getString(Activity activity, String key, String defaultValue) {
+        return activity.getSharedPreferences(HOME_PREFS, Context.MODE_PRIVATE).getString(key, defaultValue);
     }
 
 

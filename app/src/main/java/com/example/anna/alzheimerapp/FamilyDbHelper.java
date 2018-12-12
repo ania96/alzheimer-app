@@ -15,7 +15,6 @@ public class FamilyDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE if not exists " + FamilyContract.FamilyEntry.TABLE_NAME +
                     "("
                     + FamilyContract.FamilyEntry.ID + " INTEGER PRIMARY KEY,"
-//                    + FamilyContract.FamilyEntry.IMAGE + " TEXT,"
                     + FamilyContract.FamilyEntry.NAME + " TEXT,"
                     + FamilyContract.FamilyEntry.RELATIONSHIP + " TEXT);";
 
@@ -25,14 +24,11 @@ public class FamilyDbHelper extends SQLiteOpenHelper {
 
     public FamilyDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_TABLE);
-        Log.d("DbMsg", "Table created");
-
     }
 
     @Override
@@ -42,16 +38,16 @@ public class FamilyDbHelper extends SQLiteOpenHelper {
     }
 
     public long addMember(String name, String relationship, SQLiteDatabase sqLiteDatabase) {
-        if (sqLiteDatabase.isOpen()) {
-            Log.d("BASE", "OPEN!");
-        }
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(FamilyContract.FamilyEntry.NAME, name);
         contentValues.put(FamilyContract.FamilyEntry.RELATIONSHIP, relationship);
         return sqLiteDatabase.insert(FamilyContract.FamilyEntry.TABLE_NAME, null, contentValues);
     }
 
+    public void deleteMemberById(long id, SQLiteDatabase sqLiteDatabase){
+        int j = sqLiteDatabase.delete(FamilyContract.FamilyEntry.TABLE_NAME, "id="+id, null );
+        int i=0;
+    }
 
     public Cursor readMembers(SQLiteDatabase sqLiteDatabase, String name) {
         return sqLiteDatabase.query(

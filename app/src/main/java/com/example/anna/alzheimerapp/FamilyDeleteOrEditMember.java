@@ -41,14 +41,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FamilyDeleteOrEditMember extends AppCompatActivity implements View.OnClickListener{
-    private EditText editTextName, editTextRelationship, editTextSearch;
-    private Button buttonSearch, buttonDelete;
-    private ImageButton imageButtonDelete;
     ImageView imageView;
     FamilyDbHelper familyDbHelper;
     private MemberAdapterToEdit memberAdapterToEdit;
     private List<String> readmembers = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,52 +58,16 @@ public class FamilyDeleteOrEditMember extends AppCompatActivity implements View.
         SQLiteDatabase sqLiteDatabase = familyDbHelper.getReadableDatabase();
         memberAdapterToEdit = new MemberAdapterToEdit(this, familyDbHelper.readMembers(sqLiteDatabase, null));
         recyclerView.setAdapter(memberAdapterToEdit);
-
-        init();
-//        imageView = (ImageView)findViewById(R.id.imageView);
     }
-
-
-    public void init() {
-        buttonDelete = (Button)findViewById(R.id.buttonDelete);
-        buttonDelete.setOnClickListener(this);
-
-
-
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.buttonDelete:
+            case R.id.buttonDeleteMember:
                 Toast.makeText(this, "lol", Toast.LENGTH_SHORT).show();
 
                 break;
         }
 
     }
-
-//
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.buttonSearch:
-//                RecyclerView recyclerView = findViewById(R.id.recyclerview);
-//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//                recyclerView.setLayoutManager(linearLayoutManager);
-//                familyDbHelper = new FamilyDbHelper(this);
-//                SQLiteDatabase sqLiteDatabase = familyDbHelper.getReadableDatabase();
-//                String searchName;
-//                if( editTextSearch.getText().toString().equals("")){
-//                    searchName = null;
-//                } else {
-//                    searchName = editTextSearch.getText().toString();
-//                }
-//                memberAdapter = new MemberAdapter(this, familyDbHelper.readMembers(sqLiteDatabase, searchName));
-//                recyclerView.setAdapter(memberAdapter);
-//                break;
-//            default:
-//        }
-//    }
 }
 

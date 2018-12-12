@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDelete"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDeleteMember"
         app:layout_constraintVertical_bias="0.137" />
 
     <TextView
@@ -48,7 +48,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/buttonDelete"
+        android:id="@+id/buttonDeleteMember"
         android:layout_width="112dp"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"

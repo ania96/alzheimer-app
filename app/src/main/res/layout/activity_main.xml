@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:gravity="center_horizontal"
-                android:text="Twój dom - współrzędne"
+                android:text="Twój dom - adres"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
                 tools:layout_editor_absoluteX="116dp" />
@@ -91,21 +91,14 @@
                 android:layout_width="268dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Dł. geograf., np. 54.344831"
-                android:inputType="numberDecimal" />
+                android:hint="Podaj adres Twojego domu"
+                android:inputType="text" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/homeLng"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Szer. geograf., np. 18.664773"
-                android:inputType="numberDecimal" />
         </TableRow>
 
         <TableRow

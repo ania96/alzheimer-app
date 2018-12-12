@@ -4,19 +4,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,28 +23,20 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
     public MemberAdapter(Context context, Cursor cursor){
         mContext=context;
         mCursor=cursor;
-
     }
-
     public class MemberViewHolder extends RecyclerView.ViewHolder{
 
         public TextView nameText;
         public TextView relationshipText;
         public ImageView imageView;
-
-
         public MemberViewHolder(@NonNull View itemView) {
             super(itemView);
-
             //szukamy textviews, za pomoca których beda wyswietlane dane w pojedynczym rzedzie w recyclerview
             nameText = itemView.findViewById(R.id.memberName);
             relationshipText = itemView.findViewById(R.id.memberRelationship);
             imageView = itemView.findViewById(R.id.imageView);
         }
     }
-
-
-
     @NonNull
     @Override
     public MemberViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
@@ -80,7 +67,6 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         holder.nameText.setText(name);
         holder.relationshipText.setText(relationship);
     }
-
     @Override
     public int getItemCount() {
         //chcemy zwrocic tak duzo elementów, jak mamy w BD
@@ -90,7 +76,5 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         readMembers = new ArrayList<>();
         readMembers.addAll(newList);
         notifyDataSetChanged();
-
     }
-
 }

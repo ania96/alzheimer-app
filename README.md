@@ -1,1 +1,1 @@
-# in-ynierka
+Praca dyplomowa inzynierska. Aplikacja przeznaczona jest g³ównie dla osób starszych, cierpi¹cych na demencjê i pocz¹tkowe stadium choroby Alzheimera.

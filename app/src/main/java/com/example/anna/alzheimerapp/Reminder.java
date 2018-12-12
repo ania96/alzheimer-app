@@ -1,20 +1,13 @@
-package com.example.anna.alzheimerapp.reminder;
+package com.example.anna.alzheimerapp;
 
-import android.app.AlarmManager;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TimePicker;
-
-import com.example.anna.alzheimerapp.FamilyAddMember;
-import com.example.anna.alzheimerapp.FamilyOption;
-import com.example.anna.alzheimerapp.R;
 
 public class Reminder extends AppCompatActivity  implements View.OnClickListener {
     private FloatingActionButton floatingActionButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +18,6 @@ public class Reminder extends AppCompatActivity  implements View.OnClickListener
     public void init(){
         floatingActionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(this);
-
-
-
     }
 
     @Override

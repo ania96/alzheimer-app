@@ -30,9 +30,6 @@ public class FamilyBrowseMembers extends AppCompatActivity implements View.OnCli
     ImageView imageView;
     FamilyDbHelper familyDbHelper;
     private MemberAdapter memberAdapter;
-   ;
-    private List<String> readmembers = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +45,14 @@ public class FamilyBrowseMembers extends AppCompatActivity implements View.OnCli
         recyclerView.setAdapter(memberAdapter);
 
         init();
-//        imageView = (ImageView)findViewById(R.id.imageView);
     }
-
-
     public void init() {
         buttonSearch = (Button) findViewById(R.id.buttonSearch);
         buttonSearch.setOnClickListener(this);
         editTextSearch = (EditText) findViewById(R.id.editTextSearch);
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextRelationship = (EditText) findViewById(R.id.editTextRelationship);
-
     }
-
 
     @Override
     public void onClick(View view) {

@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FamilyAddMember extends AppCompatActivity implements View.OnClickListener {
     FamilyDbHelper familyDbHelper;
@@ -50,24 +52,17 @@ public class FamilyAddMember extends AppCompatActivity implements View.OnClickLi
     private TextView textViewRelationship, textViewName;
     private EditText editTextName, editTextRelationship;
     private ImageView imageViewAddedPhoto;
-    private MemberAdapter memberAdapter;
     static final int REQUEST_CAMERA = 1;
     static final int SELECT_FILE = 2;
-    File image_file;
-    String imageFilePath;
     String path;
     Bitmap chosenImage;
 
-    //creata a file in internal storage
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String saveToInternalStorage(Bitmap bitmapImage, long id) throws IOException {
         Log.d("FOLDER", "caling function!");
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
 
-
-        //zapisanie zdjecia do pliku
         File mypath = new File(directory, id + ".jpg");
         path = mypath.getAbsolutePath();
         FileOutputStream fos = null;
@@ -97,7 +92,6 @@ public class FamilyAddMember extends AppCompatActivity implements View.OnClickLi
                 default:
                     rotatedBitmap = bitmapImage;
             }
-            // Use the compress method on the BitMap object to write image to the OutputStream
             rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,10 +102,7 @@ public class FamilyAddMember extends AppCompatActivity implements View.OnClickLi
                 e.printStackTrace();
             }
         }
-
-
         return directory.getAbsolutePath();
-
     }
 
     @Override
@@ -143,17 +134,8 @@ public class FamilyAddMember extends AppCompatActivity implements View.OnClickLi
         } else {
             String name = editTextName.getText().toString();
             String relationship = editTextRelationship.getText().toString();
-
-
-            ContextWrapper cw = new ContextWrapper(getApplicationContext());
-            // path to /data/data/yourapp/app_data/imageDir
-            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-            File mypath = new File(directory, "TEST.jpg");
-            path = mypath.getAbsolutePath();
             String image = imageViewAddedPhoto.toString();
             imageViewAddedPhoto.setImageURI(null);
-//            imageViewAddedPhoto.setImageURI(imgUri);
-
             SQLiteDatabase sqLiteDatabase = familyDbHelper.getWritableDatabase();
             long id = familyDbHelper.addMember(name, relationship, sqLiteDatabase);
 
@@ -202,8 +184,6 @@ public class FamilyAddMember extends AppCompatActivity implements View.OnClickLi
                 matrix, true);
     }
 
-
-    //metoda odpowiedzialna za sposob w jaki ma byc dodane zdjecie
     public void chooseMetodToChoosePhoto() {
         final CharSequence[] items = {"Zrób zdjęcie", "Wybierz zdjęcie z galerii", "Zamknij"};
 
@@ -218,11 +198,7 @@ public class FamilyAddMember extends AppCompatActivity implements View.OnClickLi
 
                     if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                         startActivityForResult(takePictureIntent, REQUEST_CAMERA);
-//                        File file = getFile();
-//                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-
                     }
-//
                 } else if (items[i].equals("Wybierz zdjęcie z galerii")) {
                     Intent choosePictureIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
@@ -256,77 +232,16 @@ public class FamilyAddMember extends AppCompatActivity implements View.OnClickLi
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                     imageViewAddedPhoto.setImageBitmap(selectedImage);
-//                    imageViewAddedPhoto.s
                     chosenImage = selectedImage;
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
-//                    Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
                 }
 
             } else {
-//                Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
             }
-//                Uri uri = data.getData();
-//                String src = getPath(uri);
-//
-//                File imgFile = new File(src);
-//
-//                if(imgFile.exists()){
-//                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//                    imageViewAddedPhoto.setImageBitmap(myBitmap);
-//                    chosenImage = myBitmap;
-//                    Toast.makeText(FamilyAddMember.this, "Zapisano", Toast.LENGTH_LONG).show();
-//
-//                }
-
-//
-//
-//
-//                    imageViewAddedPhoto.setImageBitmap(myBitmap);
-//    //                saveToInternalStorage(bmp);
-//                    chosenImage = myBitmap;
-//                    Toast.makeText(FamilyAddMember.this, "Zapisano", Toast.LENGTH_LONG).show();
-//
-
 
         }
     }
-
-    public void rotateImage(Bitmap bitmap) {
-        ExifInterface exifInterface = null;
-        int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-        Matrix matrix = new Matrix();
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                matrix.setRotate(90);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                matrix.setRotate(180);
-                break;
-            default:
-        }
-//        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap,0,0, bitmap.getWidth(), bitmap.getHeight(),matrix, true);
-        imageViewAddedPhoto.setImageBitmap(bitmap);
-    }
-
-    public String getPath(Uri uri) {
-
-        String path = null;
-        String[] projection = {MediaStore.Files.FileColumns.DATA};
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-
-        if (cursor == null) {
-            path = uri.getPath();
-        } else {
-            cursor.moveToFirst();
-            int column_index = cursor.getColumnIndexOrThrow(projection[0]);
-            path = cursor.getString(column_index);
-            cursor.close();
-        }
-
-        return ((path == null || path.isEmpty()) ? (uri.getPath()) : path);
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -336,7 +251,6 @@ public class FamilyAddMember extends AppCompatActivity implements View.OnClickLi
             case R.id.buttonConfirmMember:
                 addNewMember();
                 break;
-
         }
     }
 }
