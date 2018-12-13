@@ -71,12 +71,10 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "Mapa jest gotowa");
         mMap = googleMap;
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
-            Toast.makeText(MapsActivity.this, "pobano mapke", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(MapsActivity.this, "Błąd przy pobieraniu lokalizacji", Toast.LENGTH_SHORT).show();
         }
@@ -177,12 +175,10 @@ public class MapsActivity extends FragmentActivity implements
                     for (int i = 0; i < grantResults.length; i++) {
                         if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionsGranted = false;
-                            Toast.makeText(this, "pozwolenie zabronione", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
                     }
-                    Toast.makeText(this, "pozwolenie uzyskane", Toast.LENGTH_SHORT).show();
                     mLocationPermissionsGranted = true;
                     initMap();
                 }
@@ -227,7 +223,6 @@ public class MapsActivity extends FragmentActivity implements
     }
     private class DownloadTask extends AsyncTask<String, Void, String> {
 
-        // Downloading data in non-ui thread
         @Override
         protected String doInBackground(String... url) {
             String data = "";
@@ -235,7 +230,6 @@ public class MapsActivity extends FragmentActivity implements
             try {
                 data = downloadUrl(url[0]);
             } catch (Exception e) {
-                Log.d("Background Task", e.toString());
             }
             return data;
         }
@@ -309,7 +303,6 @@ public class MapsActivity extends FragmentActivity implements
             data = sb.toString();
             br.close();
         } catch (Exception e) {
-            Log.d("Exception while downloading url", e.toString());
         } finally {
             iStream.close();
             urlConnection.disconnect();

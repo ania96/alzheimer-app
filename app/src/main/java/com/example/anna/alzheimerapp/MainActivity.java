@@ -88,8 +88,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.INTERNET
                 }, 10);
-                Toast.makeText(MainActivity.this, "Mam dostep do pozwolenia", Toast.LENGTH_LONG).show();
-
                 return;
             }
         }
@@ -101,8 +99,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         buttonMyLocalisation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Nie mam dostepu", Toast.LENGTH_LONG).show();
-
                 locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
             }
         });
